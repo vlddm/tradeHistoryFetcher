@@ -1,9 +1,14 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
+const outputPath = 'bitmex'
+
+fs.mkdirSync(outputPath)
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 async function getTrades(symbol, fromId) {
     const count = 1000
@@ -29,6 +34,7 @@ async function getTrades(symbol, fromId) {
                 storeCSV(accum, start, lastId)
                 start = lastId
                 i = 0;
+                accum = []
             }
         } catch (e) {
             console.error(e)
@@ -43,7 +49,7 @@ function storeCSV(data, start, end) {
         let { timestamp, price, size, trdMatchID, side } = i;
         output += `${timestamp},${price},${size},${trdMatchID},${side}\n`;
     }
-    const filename = `bitmex/${symbol}-${start}-${end}.csv`
+    const filename = `${outputPath}/${symbol}-${start}-${end}.csv`
     fs.writeFileSync(filename, output)
     console.log(`Data saved to ${filename}`)
 }
