@@ -3,7 +3,11 @@ const fs = require('fs');
 
 const outputPath = 'bitmex'
 
-fs.mkdirSync(outputPath)
+try{ 
+    fs.mkdirSync(outputPath)
+} catch (e) {
+    console.error(e)
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
