@@ -35,7 +35,7 @@ async function getTrades(symbol, fromId) {
             await sleep(1900)
             i++;
             if (i>=100) {
-                storeCSV(accum, start, lastId)
+                storeCSV(accum, start, lastId, symbol)
                 start = lastId
                 i = 0;
                 accum = []
@@ -47,7 +47,7 @@ async function getTrades(symbol, fromId) {
     } while (trades.length >= count)
 }
 
-function storeCSV(data, start, end) {
+function storeCSV(data, start, end, symbol) {
     let output = "Timestamp,Price,Quantity,TradeId,Side\n"
     for (i of data) {
         let { timestamp, price, size, trdMatchID, side } = i;
