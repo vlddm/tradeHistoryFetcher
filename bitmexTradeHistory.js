@@ -23,7 +23,7 @@ async function getTrades(symbol, fromId) {
             console.log(trades[trades.length-1].timestamp)
             accum = accum.concat(trades)
             lastId = lastId + count
-            await sleep(1300)
+            await sleep(1900)
             i++;
             if (i>=100) {
                 storeCSV(accum, start, lastId)
@@ -42,7 +42,9 @@ function storeCSV(data, start, end) {
         let { timestamp, price, size, trdMatchID, side } = i;
         output += `${timestamp},${price},${size},${trdMatchID},${side}\n`;
     }
-    fs.writeFileSync(`binanceTrades-${symbol}-${start}-${end}.csv`, output)
+    const filename = `bitmex/${symbol}-${start}-${end}.csv`
+    fs.writeFileSync(filename, output)
+    console.log(`Data saved to ${filename}`)
 }
 
 getTrades('XBTUSD', 9000000)
