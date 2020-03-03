@@ -28,6 +28,7 @@ async function getTrades(symbol, fromId) {
             if (i>=100) {
                 storeCSV(accum, start, lastId)
                 start = lastId
+                i = 0;
             }
         } catch (e) {
             console.error(e)
